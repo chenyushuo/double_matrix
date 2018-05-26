@@ -1,6 +1,6 @@
 objects = main.o matrix.so
 pattern = -Wall -g --std=c++11
-matrix = BaseMatrix.cpp Matrix.cpp ColVector.cpp RowVector.cpp
+matrix = BaseMatrix.cpp Matrix.cpp ColVector.cpp RowVector.cpp Transformation.cpp
 
 run : main
 	reset && ./main

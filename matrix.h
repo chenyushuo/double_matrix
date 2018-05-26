@@ -49,6 +49,7 @@ class RowVector;
 class Matrix : public BaseMatrix{
 private:
     size_t row_, col_;
+    size_t swap_times_;
 
 public:
     Matrix(size_t row, size_t col, const double *value = nullptr);
@@ -75,6 +76,19 @@ public:
     Matrix & operator -= (const Matrix &mtr);
     Matrix & operator *= (double k);
     Matrix & operator /= (double k);
+
+    void RowTransformationMulti(size_t r1, double k);
+    void RowTransformationAdd(size_t r1, size_t r2, double k);
+    void RowTransformationSwap(size_t r1, size_t r2);
+    void RowTransformation();
+
+    void ColTransformationMulti(size_t l1, double k);
+    void ColTransformationAdd(size_t l1, size_t l2, double k);
+    void ColTransformationSwap(size_t r1, size_t r2);
+    void ColTransformation();
+
+    friend const double Det(const Matrix &mtr);
+    friend const Matrix Inverse(const Matrix &mtr);
 
     friend const Matrix operator + (const Matrix &mtr);
     friend const Matrix operator - (const Matrix &mtr);
@@ -140,6 +154,7 @@ public:
 
     friend const ColVector operator * (const Matrix &mtr, const ColVector &cvec);
     friend const Matrix operator * (const ColVector &cvec, const RowVector &rvec);
+    friend const double operator * (const RowVector &rvec, const ColVector &cvec);
 
     friend std :: istream & operator >> (std :: istream &is, ColVector &cvec);
     friend std :: ostream & operator << (std :: ostream &os, const ColVector &cvec);
@@ -189,6 +204,7 @@ public:
 
     friend const RowVector operator * (const RowVector &rvec, const Matrix &mtr);
     friend const Matrix operator * (const ColVector &cvec, const RowVector &rvec);
+    friend const double operator * (const RowVector &rvec, const ColVector &cvec);
 
     friend std :: istream & operator >> (std :: istream &is, RowVector &rvec);
     friend std :: ostream & operator << (std :: ostream &os, const RowVector &rvec);

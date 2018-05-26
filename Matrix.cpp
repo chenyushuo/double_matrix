@@ -7,13 +7,13 @@
 using namespace std;
 
 Matrix :: Matrix(size_t row, size_t col, const double *value) :
-    BaseMatrix(row * col, value), row_(row), col_(col)
+    BaseMatrix(row * col, value), row_(row), col_(col), swap_times_(0)
 {
 
 }
 
 Matrix :: Matrix(size_t n, double k) :
-    BaseMatrix(n * n), row_(n), col_(n)
+    BaseMatrix(n * n), row_(n), col_(n), swap_times_(0)
 {
     double *ptr = begin();
     for (size_t i = 0; i < n; i ++){
@@ -23,13 +23,13 @@ Matrix :: Matrix(size_t n, double k) :
 }
 
 Matrix :: Matrix(const ColVector &cvec) :
-    BaseMatrix(cvec.row_, cvec.cbegin()), row_(cvec.row_), col_(1)
+    BaseMatrix(cvec.row_, cvec.cbegin()), row_(cvec.row_), col_(1), swap_times_(0)
 {
 
 }
 
 Matrix :: Matrix(const RowVector &rvec) :
-    BaseMatrix(rvec.col_, rvec.cbegin()), row_(1), col_(rvec.col_)
+    BaseMatrix(rvec.col_, rvec.cbegin()), row_(1), col_(rvec.col_), swap_times_(0)
 {
 
 }
@@ -174,6 +174,10 @@ const Matrix operator * (const ColVector &cvec, const RowVector &rvec){
             *ptr++ = k * (*pr++);
     }
     return ans;
+}
+
+const double operator * (const RowVector &rvec, const ColVector &cvec){
+    return inner_product(rvec.cbegin(), rvec.cend(), cvec.cbegin(), 0);
 }
 
 istream & operator >> (istream &is, Matrix &mtr){
